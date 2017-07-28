@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  className="hello-world"
+>
+  Hello World!!!!! (from the full lifecycle component)
+  <img
+    alt="logo"
+    className="logo-img"
+    src="react-logo.png"
+  />
+  <span
+    className="icon-icon_B039"
+  />
+</div>
+`;

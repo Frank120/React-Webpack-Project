@@ -1,0 +1,9 @@
+$primary-color: #822fdd;
+
+.hello-world {
+  transform: translate(0, 20px);
+
+  &:hover {
+    background-color: color($primary-color a(0.45));
+  }
+}

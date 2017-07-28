@@ -1,0 +1,10 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Index Page
+  body
+    ul
+      each entry in htmlWebpackPlugin.options.entries
+        li
+          a(href="/pages/"+ entry +".html") #{entry}

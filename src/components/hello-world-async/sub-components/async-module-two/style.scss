@@ -1,0 +1,9 @@
+$primary-color: #cddd15;
+
+.hello-world {
+  transform: translate(0, 100px);
+
+  &:hover {
+    color: color($primary-color a(0.45));
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "presets": [
+    // webpack understands the native import syntax, and uses it for tree shaking
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ],
+    "react"
+  ],
+  "env": {
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs", "babel-plugin-dynamic-import-node"]
+    }
+  },
+  "plugins": [
+    // Enables React code to work with HMR.
+    "react-hot-loader/babel",
+    "syntax-dynamic-import"
+  ]
+}

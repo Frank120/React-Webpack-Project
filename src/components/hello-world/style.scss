@@ -1,0 +1,15 @@
+$primary-color: #444;
+
+.hello-world {
+  transform: translate(0, 20px);
+
+  &:hover {
+    color: color($primary-color a(0.45));
+  }
+
+  .logo-img {
+    height: 20px;
+  }
+
+  font-family: "TheBully";
+}

@@ -1,0 +1,13 @@
+$primary-color: #1eff0d;
+
+.hello-world {
+  transform: translate(0, 115px);
+
+  &:hover {
+    color: color($primary-color a(0.45));
+  }
+
+  .logo-img {
+    height: 20px;
+  }
+}
