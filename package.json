@@ -16,7 +16,7 @@
     "prebuild-dev": "npm run test",
     "prebuild-prod": "npm run test"
   },
-  "author": "MLP-CD",
+  "author": "Frank",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
