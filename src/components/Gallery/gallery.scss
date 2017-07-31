@@ -1,6 +1,8 @@
 body,html{
     // width: 100%;
     // height: 100%;
+    margin: 0;
+    padding: 0;
     background-color: #222;
 }
 
@@ -13,7 +15,7 @@ body,html{
 .stage{
     position: relative;
     width: 100%;
-    height: 680px;
+    height: 100vh;
 }
 
 // stage -- end 
@@ -25,6 +27,33 @@ body,html{
     height: 100%;
     overflow: hidden;
     background-color:#ddd;
+
+    @at-root{
+        .img-figure{
+            width: 320px;
+            height: 360px;
+            margin: 0;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: #fff;
+            position: absolute;
+
+            .img-item{
+                width: 100%;
+                height: calc(100% - 80px);
+            }
+        }
+
+        figcaption{
+            text-align: center;
+
+            .img-title{
+                margin: 20px 0 0 0;
+                color: #a7a0a2;
+                font-size: 16px;
+            }
+        }
+    }
 }
 
 // image -- end
