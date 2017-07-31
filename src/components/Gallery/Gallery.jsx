@@ -23,8 +23,17 @@ imageDatas = (function getImageURL(imageDataArr){
 
 const ImgFingure = React.createClass({
     render : function () {
+
+        var styleObj = {};
+        /**
+         * 如果props属性中指定了这张图片的位置  则使用
+         */
+        if(this.props.arrange.pos){
+            styleObj = this.props.arrange.pos;
+        }
+
         return (
-            <figure className={style['img-figure']}>
+            <figure className={style['img-figure']} style= { styleObj }>
                 <img src={ this.props.data.imageURL }
                      alt={ this.props.data.title }
                      className={ style['img-item'] }
@@ -101,23 +110,49 @@ const GalleryComponent = React.createClass ({
                 imgsArrangeTopArr[index].pos = {
                     top : getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
                     left : getRangeRandom(vPosRangeX[0], vPosRangeX[1])
-                }
+                };
             });
 
             /**
              * 布局左右两侧的图片
              */
+            for(var i = 0, j = imgsArrangeArr.length, k = j / 2; i < j; i++){
+                var hPosRangeLORX = null;
+                /**
+                 * 前半部分布局左边, 后半部分布局右边
+                 */
+                if(i < k) {
+                    hPosRangeLORX = hPosRangeLeftSecX;
+                }else{
+                    hPosRangeLORX = hPosRangeRightSecX;
+                }
+
+                imgsArrangeArr[i].pos = {
+                    top : getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
+                    left : getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
+                };
+            }
+
+            if(imgsArrangeTopArr && imgsArrangeTopArr[0]){
+                imgsArrangeArr.splice(topImgSpliceIndex, 0, imgsArrangeTopArr[0]);
+            }
+            
+            imgsArrangeArr.splice(centerIndex, 0, imgsArrangeCenterArr[0]);
+
+            this.setState({
+                imgsArrangeArr : imgsArrangeArr
+            });
     },
 
     getInitialState : function (){
         return {
             imgsArrangeArr : [
-                {
-                    pos : {
-                        left : '0',
-                        right : '0'
-                    }
-                }
+                // {
+                //     pos : {
+                //         left : '0',
+                //         right : '0'
+                //     }
+                // }
             ]
         };
     },
@@ -150,14 +185,14 @@ const GalleryComponent = React.createClass ({
         this.Constant.centerPos = {
             left : halfStageW - halfImgW,
             top  : halfStageH - halfImgH
-        }
+        };
 
         /**
          * 左右两侧图片的位置
          */
         this.Constant.hPosRange.leftSecX[0] = -halfImgW;
         this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3;
-        this.Constant.hPosRange.rightSecX[0] = halfStageW - halfImgW;
+        this.Constant.hPosRange.rightSecX[0] = halfStageW + halfImgW;
         this.Constant.hPosRange.rightSecx[1] = stageW - halfImgW;
         this.Constant.hPosRange.y[0] = -halfImgH;
         this.Constant.hPosRange.y[1] = stageH - halfStageH;
@@ -165,7 +200,7 @@ const GalleryComponent = React.createClass ({
         this.Constant.hPosRange.topY[0] = -halfImgH,
         this.Constant.hPosRange.topY[1] = halfStageH - halfImgH * 3;
         this.Constant.hPosRange.x[0]    = halfStageW - imgW;
-        this.Constant.hPosRange.x[1]    = halfImgW;
+        this.Constant.hPosRange.x[1]    = halfStageW;
 
         this.rearrange(0);
     },
@@ -184,7 +219,7 @@ const GalleryComponent = React.createClass ({
                     }
                 }
             }
-            ImgFingures.push(<ImgFingure data={ value } key={'item'+index} ref={'imgFigure' + index}/>);
+            ImgFingures.push(<ImgFingure data={ value } key={'item'+index} ref={'imgFigure' + index} arrange= {this.state.imgsArrangeArr[index]}/>);
         }.bind(this));
 
         return (
