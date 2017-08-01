@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import style from './gallery.scss';
+// import style from './gallery.scss';
+require('./gallery.css')
 
 /**
  * 获取图片的相关数据
@@ -30,6 +31,24 @@ function get30DegRandom(){
 };
 
 const ImgFingure = React.createClass({
+
+    /**
+     * imgFigure 的点击处理函数
+     */
+    handleClick : function (e){
+
+        if(this.props.arrange.isCenter){
+            this.props.inverse();
+        }else{
+            this.props.center();
+        }
+
+        this.props.inverse();
+
+        e.stopPropagation();
+        e.preventDefault();
+    },
+
     render : function () {
 
         var styleObj = {};
@@ -49,14 +68,26 @@ const ImgFingure = React.createClass({
             }.bind(this));
         }
 
+        if(this.props.arrange.isCenter){
+            styleObj.zIndex = 11;
+        }
+
+        var imgFigureClassName = "img-figure";
+            imgFigureClassName += this.props.arrange.isInverse ? " is-inverse" : "";
+
         return (
-            <figure className={style['img-figure']} style= { styleObj }>
+            <figure className={imgFigureClassName} style= { styleObj } onClick= { this.handleClick }>
                 <img src={ this.props.data.imageURL }
                      alt={ this.props.data.title }
-                     className={ style['img-item'] }
+                     className='img-item'
                 />
                 <figcaption>
-                    <h2>{ this.props.data.title }</h2>
+                    <h2 className="img-title">{ this.props.data.title }</h2>
+                    <div className = "img-back" onClick={ this.handleClick }>
+                        <p>
+                            {this.props.data.desc}
+                        </p>
+                    </div>
                 </figcaption>
             </figure>
         )
@@ -89,6 +120,25 @@ const GalleryComponent = React.createClass ({
     },
 
     /**
+     * 翻转图片
+     * @param index 输入当前被执行 inverse 操作的图片对应的图片信息数组的index 值
+     * @return {Function} 这是一个必报函数, 期内return一个真正被执行的函数
+     */
+
+     inverse : function (index){
+        return function (){
+            var imgsArrangeArr = this.state.imgsArrangeArr;
+
+            imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse;
+
+            this.setState({
+                imgsArrangeArr : imgsArrangeArr
+            });
+
+        }.bind(this);
+     },
+
+    /**
      * 重新布局, 传入一个参数 指定哪个居中排布
      */
     rearrange : function (centerIndex){
@@ -112,8 +162,11 @@ const GalleryComponent = React.createClass ({
              * 首先居中 centerIndex 的图片
              * 居中的图片 centerIndex 不需要旋转
              */
-            imgsArrangeCenterArr[0].pos = centerPos;
-            imgsArrangeCenterArr[0].rotate = 0;
+            imgsArrangeCenterArr[0]={
+                pos : centerPos,
+                rotate : 0,
+                isCenter : true
+            }
 
             /**
              * 取出要布局在上侧图片的信息
@@ -131,7 +184,8 @@ const GalleryComponent = React.createClass ({
                         top : getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
                         left : getRangeRandom(vPosRangeX[0], vPosRangeX[1])
                     },
-                    rotate : get30DegRandom()
+                    rotate : get30DegRandom(),
+                    isCenter : false
                 };
             });
 
@@ -154,7 +208,8 @@ const GalleryComponent = React.createClass ({
                         top : getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
                         left : getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
                     },
-                    rotate : get30DegRandom()
+                    rotate : get30DegRandom(),
+                    isCenter : false
                 };
             }
 
@@ -167,6 +222,17 @@ const GalleryComponent = React.createClass ({
             this.setState({
                 imgsArrangeArr : imgsArrangeArr
             });
+    },
+
+    /**
+     * 利用 rearrange 函数 居中对应的index的图片
+     * @param index, 需要被居中的图片对应的图片信息数组的index 值
+     * @return {Function} 
+     */
+    center : function (index){
+        return function (){
+            this.rearrange(index);
+        }.bind(this);
     },
 
     getInitialState : function (){
@@ -235,7 +301,9 @@ const GalleryComponent = React.createClass ({
                         left : 0,
                         top  : 0
                     },
-                    rotate : 0
+                    rotate : 0,
+                    isInverse : false,
+                    isCenter : false
                 }
             }
             ImgFingures.push(<ImgFingure 
@@ -243,15 +311,17 @@ const GalleryComponent = React.createClass ({
                                 key ={ index } 
                                 ref ={ 'imgFigure' + index } 
                                 arrange= { this.state.imgsArrangeArr[index] }
+                                inverse= { this.inverse(index) }
+                                center = { this.center(index) }
                             />);
         }.bind(this));
 
         return (
-            <section className={style['stage']} ref='stage'>
-                <section className={style['img-sec']}>
+            <section className='stage' ref='stage'>
+                <section className='img-sec'>
                     {ImgFingures }
                 </section>
-                <nav className={style['controller-nav']}>
+                <nav className='controller-nav'>
                     {controllerUtils}
                 </nav>
             </section>
