@@ -22,6 +22,13 @@ imageDatas = (function getImageURL(imageDataArr){
     return imageDataArr;
 })(imageDatas);
 
+/**
+ * 获取一个0~30° 之间的一个任意正付值
+ */
+function get30DegRandom(){
+    return ((Math.random() > 0.5 ? '' : "-") + Math.ceil(Math.random() * 30));
+};
+
 const ImgFingure = React.createClass({
     render : function () {
 
@@ -31,6 +38,15 @@ const ImgFingure = React.createClass({
          */
         if(this.props.arrange.pos){
             styleObj = this.props.arrange.pos;
+        }
+
+        /**
+         * 如果图片的旋转角度有值并且不为0  添加旋转角度
+         */
+        if(this.props.arrange.rotate){
+            (['-moz-', '-ms-', '-webkit-', '']).forEach(function (value){
+                 styleObj[value + 'transform'] = 'rotate(' + this.props.arrange.rotate + 'deg)';
+            }.bind(this));
         }
 
         return (
@@ -94,8 +110,10 @@ const GalleryComponent = React.createClass ({
         
             /**
              * 首先居中 centerIndex 的图片
+             * 居中的图片 centerIndex 不需要旋转
              */
             imgsArrangeCenterArr[0].pos = centerPos;
+            imgsArrangeCenterArr[0].rotate = 0;
 
             /**
              * 取出要布局在上侧图片的信息
@@ -108,9 +126,12 @@ const GalleryComponent = React.createClass ({
              * 布局在上侧的图片
              */
             imgsArrangeTopArr.forEach(function (value, index){
-                imgsArrangeTopArr[index].pos = {
-                    top : getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
-                    left : getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+                imgsArrangeTopArr[index] = {
+                    pos : {
+                        top : getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
+                        left : getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+                    },
+                    rotate : get30DegRandom()
                 };
             });
 
@@ -132,7 +153,8 @@ const GalleryComponent = React.createClass ({
                     pos : {
                         top : getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
                         left : getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
-                    }
+                    },
+                    rotate : get30DegRandom()
                 };
             }
 
@@ -212,7 +234,8 @@ const GalleryComponent = React.createClass ({
                     pos : {
                         left : 0,
                         top  : 0
-                    }
+                    },
+                    rotate : 0
                 }
             }
             ImgFingures.push(<ImgFingure 
