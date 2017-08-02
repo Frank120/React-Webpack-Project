@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import style from './gallery.scss';
-require('./gallery.css')
+import Style from './gallery.scss';
+// require('./gallery.css');
 
 /**
  * 获取图片的相关数据
@@ -73,20 +73,21 @@ const ImgFingure = React.createClass({
         }
 
         var imgFigureClassName = "img-figure";
-            imgFigureClassName += this.props.arrange.isInverse ? " is-inverse" : "";
+        imgFigureClassName = (this.props.arrange.isInverse ? "img-figure1" : "img-figure");
+        console.log(imgFigureClassName);
 
         return (
-            <figure className={imgFigureClassName} style= { styleObj } onClick= { this.handleClick }>
+            <figure className={Style[imgFigureClassName]} style= { styleObj } onClick= { this.handleClick }>
                 <img src={ this.props.data.imageURL }
                      alt={ this.props.data.title }
-                     className='img-item'
+                     className={Style['img-item']}
                 />
                 <figcaption>
-                    <h2 className="img-title">{ this.props.data.title }</h2>
-                    <div className = "img-back" onClick={ this.handleClick }>
-                        <p>
+                    <h2 className={Style["img-title"]}>{ this.props.data.title }</h2>
+                    <div className = {Style["img-back"]} onClick={ this.handleClick }>
+                        {/* <p>
                             {this.props.data.desc}
-                        </p>
+                        </p> */}
                     </div>
                 </figcaption>
             </figure>
@@ -317,11 +318,11 @@ const GalleryComponent = React.createClass ({
         }.bind(this));
 
         return (
-            <section className='stage' ref='stage'>
-                <section className='img-sec'>
+            <section className={Style['stage']} ref='stage'>
+                <section className={Style['img-sec']}>
                     {ImgFingures }
                 </section>
-                <nav className='controller-nav'>
+                <nav className={Style['controller-nav']}>
                     {controllerUtils}
                 </nav>
             </section>

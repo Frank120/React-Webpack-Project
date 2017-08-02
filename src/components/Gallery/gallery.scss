@@ -42,6 +42,22 @@ html {
     }
   }
 
+  .img-figure1 {
+    width: 320px;
+    height: 360px;
+    margin: 0;
+    padding: 40px;
+    box-sizing: border-box;
+    background-color: #fff;
+    position: absolute;
+    transform: rotateY(180deg) !important;
+
+    .img-item {
+      width: 100%;
+      height: calc(100% - 80px);
+    }
+  }
+
   figcaption {
     text-align: center;
 
