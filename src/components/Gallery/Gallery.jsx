@@ -43,8 +43,6 @@ const ImgFingure = React.createClass({
             this.props.center();
         }
 
-        this.props.inverse();
-
         e.stopPropagation();
         e.preventDefault();
     },
@@ -101,6 +99,23 @@ const ImgFingure = React.createClass({
 function getRangeRandom(low, high){
     return Math.ceil(Math.random() * (high - low) + low);
 };
+
+/**
+ * 控制组件
+ */
+const ControllerUnit = React.createClass({
+    handleClick : function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    },
+    render : function () {
+        return (
+            <span className={Style['controller-unit']}
+                  onClick  = {this.handleClick}
+            ></span>
+        )
+    }
+});
 
 const GalleryComponent = React.createClass ({
 
@@ -308,13 +323,18 @@ const GalleryComponent = React.createClass ({
                 }
             }
             ImgFingures.push(<ImgFingure 
-                                data={ value } 
-                                key ={ index } 
-                                ref ={ 'imgFigure' + index } 
-                                arrange= { this.state.imgsArrangeArr[index] }
-                                inverse= { this.inverse(index) }
-                                center = { this.center(index) }
-                            />);
+                data={ value } 
+                key ={ index } 
+                ref ={ 'imgFigure' + index } 
+                arrange= { this.state.imgsArrangeArr[index] }
+                inverse= { this.inverse(index) }
+                center = { this.center(index) }
+            />);
+
+            controllerUtils.push(
+                <ControllerUnit/>
+            )
+
         }.bind(this));
 
         return (
