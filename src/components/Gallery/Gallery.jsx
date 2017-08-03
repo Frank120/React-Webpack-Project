@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Style from './gallery.scss';
-// require('./gallery.css');
 
 /**
  * 获取图片的相关数据
@@ -61,8 +60,8 @@ const ImgFingure = React.createClass({
          * 如果图片的旋转角度有值并且不为0  添加旋转角度
          */
         if(this.props.arrange.rotate){
-            (['-moz-', '-ms-', '-webkit-', '']).forEach(function (value){
-                 styleObj[value + 'transform'] = 'rotate(' + this.props.arrange.rotate + 'deg)';
+            (['MozTransform', 'msTransform', 'WebkitTransform', 'transform']).forEach(function (value){
+                 styleObj[value] = 'rotate(' + this.props.arrange.rotate + 'deg)';
             }.bind(this));
         }
 
@@ -83,9 +82,9 @@ const ImgFingure = React.createClass({
                 <figcaption>
                     <h2 className={Style["img-title"]}>{ this.props.data.title }</h2>
                     <div className = {Style["img-back"]} onClick={ this.handleClick }>
-                        {/* <p>
+                         <p>
                             {this.props.data.desc}
-                        </p> */}
+                        </p> 
                     </div>
                 </figcaption>
             </figure>
@@ -105,14 +104,37 @@ function getRangeRandom(low, high){
  */
 const ControllerUnit = React.createClass({
     handleClick : function (e) {
+
+        /**
+         * 如果点击的是当前正在选中状态的按钮 翻转图片 否则将对应的图片居中
+         */
+        if(this.props.arrange.isCenter){
+            this.props.inverse();
+        }else{
+            this.props.center();
+        }
+
         e.preventDefault();
         e.stopPropagation();
     },
     render : function () {
+        var controllerUtilsClassName = "controller-unit";
+        
+        /**
+         * 如果对应的是居中的图片, 显示按钮的居中态
+         */
+        if (this.props.arrange.isCenter){
+            controllerUtilsClassName = "controller-unit-center";
+
+            if(this.props.arrange.isInverse){
+                controllerUtilsClassName = "controller-unit-center-inverse";
+            }
+        }
+
         return (
-            <span className={Style['controller-unit']}
+            <span className={Style[controllerUtilsClassName]}
                   onClick  = {this.handleClick}
-            ></span>
+            >{this.props.item}</span>
         )
     }
 });
@@ -170,7 +192,7 @@ const GalleryComponent = React.createClass ({
             vPosRangeX     = vPosRange.x,
 
             imgsArrangeTopArr = [],
-            topImgNum      = Math.floor(Math.random() * 2),
+            topImgNum      = Math.floor(Math.random() * 2), //取一个 或者不取
             topImgSpliceIndex = 0,
             imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1);
         
@@ -332,7 +354,13 @@ const GalleryComponent = React.createClass ({
             />);
 
             controllerUtils.push(
-                <ControllerUnit/>
+                <ControllerUnit 
+                    arrange= {this.state.imgsArrangeArr[index]}
+                    inverse= {this.inverse(index)}
+                    center = {this.center(index)}
+                    key    = {index}
+                    item   = {index + 1}
+                />
             )
 
         }.bind(this));
