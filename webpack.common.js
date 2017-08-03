@@ -14,7 +14,7 @@ module.exports = (env, compileEntries) => {
       path: path.resolve(__dirname, 'dist'),
       publicPath: '/',
       chunkFilename: 'async-chunks/[name].js',
-      filename: `entries/[name]${env === 'local' ? '' : '.[chunkhash]'}.js`,
+      filename: `entries/[name]${env === 'local' ? '' : '.[chunkhash]'}.js`
     },
 
     devtool: 'inline-source-map',
@@ -30,9 +30,9 @@ module.exports = (env, compileEntries) => {
           ['babel-loader', {
             loader: 'eslint-loader',
             options: {
-              quiet: env === 'prod',
-            },
-          }],
+              quiet: env === 'prod'
+            }
+          }]
         },
         {
           test: /\.scss$/,
@@ -45,16 +45,16 @@ module.exports = (env, compileEntries) => {
               options: {
                 sourceMap: true,
                 modules: true,
-                localIdentName: '[local]-[hash:base64:5]',
-              },
+                localIdentName: '[local]-[hash:base64:5]'
+              }
             },
             'resolve-url-loader',
             {
               loader: 'postcss-loader',
-              options: { plugins: () => [CssNextPlugin], sourceMap: true },
+              options: { plugins: () => [CssNextPlugin], sourceMap: true }
             },
-            { loader: 'sass-loader', options: { sourceMap: true } },
-          ])),
+            { loader: 'sass-loader', options: { sourceMap: true } }
+          ]))
         },
         {
           test: /\.css$/,
@@ -63,8 +63,8 @@ module.exports = (env, compileEntries) => {
           // Note the order of loader applied is opposite with the order within the loaders array
           loader: ExtractTextPlugin.extract([
             'css-loader',
-            'resolve-url-loader',
-          ]),
+            'resolve-url-loader'
+          ])
         },
         {
           test: /\.(png|svg|jpg|gif)$/,
@@ -75,9 +75,9 @@ module.exports = (env, compileEntries) => {
               // Images smaller than 2kb will be embedded as base64 data url
               limit: 2000,
               name: '/[path]/[name].[ext]',
-              outputPath: 'assets/images',
-            },
-          }],
+              outputPath: 'assets/images'
+            }
+          }]
         },
         {
           test: /\.pug/,
@@ -85,9 +85,9 @@ module.exports = (env, compileEntries) => {
           loader: [{
             loader: 'pug-loader',
             options: {
-              pretty: true,
-            },
-          }],
+              pretty: true
+            }
+          }]
         },
         {
           test: /\.(woff|woff2|eot|ttf|otf)(\?[a-z0-9]+)?$/,
@@ -97,14 +97,14 @@ module.exports = (env, compileEntries) => {
             options: {
               limit: Infinity,
               name: '/[name].[ext]',
-              outputPath: 'assets/fonts',
-            },
-          }],
-        }],
+              outputPath: 'assets/fonts'
+            }
+          }]
+        }]
     },
 
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.js', '.jsx']
     },
 
     plugins: [
@@ -118,9 +118,9 @@ module.exports = (env, compileEntries) => {
         names: env === 'local' ? ['commons'] : ['commons', 'vendor', 'manifest'],
 
         // (Modules must be shared between 2 entries)
-        minChunks: 2,
-      }),
-    ],
+        minChunks: 2
+      })
+    ]
   };
 
   // Get entries from the entries path,
@@ -147,7 +147,7 @@ module.exports = (env, compileEntries) => {
       'babel-polyfill',
 
       // The actual entry
-      `./src/entries/${entry}/entry.jsx`,
+      `./src/entries/${entry}/entry.jsx`
     ];
 
     if (env === 'local') {
@@ -158,7 +158,7 @@ module.exports = (env, compileEntries) => {
     config.plugins.push(new HtmlWebpackPlugin({
       chunks: env === 'local' ? ['commons', entry] : ['manifest', 'vendor', 'commons', entry],
       filename: `pages/${entry}.html`, // Main html output path
-      template: `./src/entries/${entry}/template.pug`, // Html template path
+      template: `./src/entries/${entry}/template.pug` // Html template path
     }));
   });
 
@@ -166,7 +166,7 @@ module.exports = (env, compileEntries) => {
     inject: false,
     filename: 'index.html', // Main html output path
     template: './src/index.pug', // Html template path
-    entries,
+    entries
   }));
 
   return config;
