@@ -4,6 +4,7 @@ import Progress from './progress';
 
 require('./assets/plugins/jquery.jplayer');
 
+let duration = null;
 let Root = React.createClass({
     getInitialState(){
         return{
@@ -15,7 +16,7 @@ let Root = React.createClass({
         $('#player').jPlayer({
             ready : function (){
                 $(this).jPlayer('setMedia', {
-                    mp3: 'http://96.f.1ting.com/598ad75b/049c370f01f9010a3cc65558c02cfd8f/zzzzzmp3/2017hAug/09X/09a_Hetu/01.mp3'
+                    mp3: 'http://www.baidu190.com/api/str/y2002.php/160680/1112489.m4a'
                 }).jPlayer('play');
             },
             supplied : 'mp3',
@@ -24,6 +25,7 @@ let Root = React.createClass({
         });
 
         $('#player').bind($.jPlayer.event.timeupdate, (e) => {
+            duration = e.jPlayer.status.duration;
             this.setState({
                 progress : e.jPlayer.status.currentPercentAbsolute
             });
@@ -34,11 +36,18 @@ let Root = React.createClass({
         $('#player').unbind($.jPlayer.event.timeupdate);
     },
 
+    progressChangeHandler(progress){
+        $('#player').jPlayer('play', duration*progress);
+    },
+
     render() {
         return (
             <div data-container='container'>
                 <Header/>
-                <Progress progress={this.state.progress}></Progress>
+                <Progress progress={this.state.progress}
+                          onProgressChange={this.progressChangeHandler}
+                          barColor = '#ff0000'
+                ></Progress>
             </div>
         )
     }
