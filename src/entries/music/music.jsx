@@ -1,5 +1,5 @@
 import React from 'react';
-import Music from '../components/Music/rout';
+import Music from '../../components/Music/rout';
 
 const Page = () =>(
     <div><Music/></div>
