@@ -8,7 +8,7 @@ let duration = null;
 let Root = React.createClass({
     getInitialState(){
         return{
-            progress : '-'
+            progress : ''
         }
     },
 
@@ -37,7 +37,9 @@ let Root = React.createClass({
     },
 
     progressChangeHandler(progress){
-        $('#player').jPlayer('play', duration*progress);
+        let result = duration*progress;
+        $('#player').jPlayer('play', result | 0);
+        //console.log(document.querySelector("audio").currentTime = result | 0);
     },
 
     render() {

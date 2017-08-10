@@ -18,8 +18,9 @@ let Progress = React.createClass({
         return (
             <div className={Style['components-progress']} ref='progerssBar' onClick={this.changeProgress}>
                 <div className={Style['progress']}
-                 style={{width:`${this.props.progress}%`, background: this.props.barColor}}></div>
-                {/* { this.props.progress }s */}
+                 style={{width:`${this.props.progress}%`, background: this.props.barColor}}>
+                  {/* { this.props.progress }s   */}
+                 </div>
             </div>
         )
     }
