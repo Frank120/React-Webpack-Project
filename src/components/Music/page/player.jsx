@@ -6,8 +6,7 @@ let duration = null;
 let Player = React.createClass({
     getInitialState(){
         return{
-            progress : 0,
-            
+            progress : 0
         }
     },
 
@@ -35,7 +34,7 @@ let Player = React.createClass({
                  <Progress progress={this.state.progress}
                           onProgressChange={this.progressChangeHandler}
                           barColor = '#ff0000'
-                ></Progress> 
+                ></Progress>
             </div>
         )
     }
