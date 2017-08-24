@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import jQuery from 'jquery';
+import Underscore from 'underscore';
 
 /* eslint-disable */
 import theBullyFont from '../../assets/fonts/the-bully.ttf';
@@ -13,6 +14,7 @@ import icons from '../../assets/iconmoon/style.css';
 import { AppContainer } from 'react-hot-loader';
 
 window.$ = jQuery.noConflict();
+window._ = Underscore.noConflict();
 
 const render = (Feed) => {
   ReactDOM.render(
