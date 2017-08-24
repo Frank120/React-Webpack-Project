@@ -25,11 +25,11 @@ module.exports = (function (){
             self.images = (self.setting.datas && self.setting.datas.src) || [];
             self.speed = self.setting.speed;
 
-            jQuery.when.apply(jQuery, self.images.map(function (src) {
+            $.when.apply($, self.images.map(function (src) {
             var right = "load";
             var error = "error";
             var image = new Image();
-            var defer = jQuery.Deferred();
+            var defer = $.Deferred();
             image.addEventListener(right, resolved);
             image.addEventListener(error, rejected);
             image.src = src;
@@ -45,7 +45,7 @@ module.exports = (function (){
                 defer.reject(image);
             }
         })).then(function () {
-            var panel = jQuery(document.querySelector("canvas"));
+            var panel = $(document.querySelector("canvas"));
             var image = Array.prototype.slice.apply(arguments);
             var count = image.length;
             var index = -1;
