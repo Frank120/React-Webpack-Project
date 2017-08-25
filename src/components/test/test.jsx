@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Style from './test.scss';
 import Images from './iamges.json';
-import '../../modules/helper-plugins/looper.js';
+import Btn from './btn/btn';
+import List from './list/list';
+import '../../modules/helper-plugins/byte.js';
 
 ImageData = (function getImageUrls(imagesDataArr){
     for(var i = 0, j = imagesDataArr.length; i < j; i++){
@@ -15,17 +17,29 @@ ImageData = (function getImageUrls(imagesDataArr){
 }(Images));
 
 const test = React.createClass({
+    getInitialState(){
+        return {
+            data : []
+        }
+    },
 
     componentDidMount(){
-        $("[data-test='testBar']").backgroundLoop({
-            datas : ImageData
-        });
+        this.looper();
     },
 
     render (){
         return (
-            <div className = {Style['test']} ref="test" data-test="testBar"></div>
+            <div className = {Style['test']} ref="test" data-test="testBar">
+                <Btn></Btn>
+                <List data = {ImageData}
+                ></List>
+            </div>
         )
+    },
+
+    looper(){
+        const target = this.refs.test;
+
     }
 });
 

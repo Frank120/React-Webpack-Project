@@ -1,0 +1,46 @@
+.content{
+    list-style: none;
+    position: relative;
+    height: 30%;
+}
+
+.item{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+}
+
+.pic1{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-image: url('http://via.placeholder.com/350x150/8a2e2e');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1;
+}
+
+.pic2{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-image: url('http://via.placeholder.com/350x150/4e2828');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+.pic3{
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-image: url('http://via.placeholder.com/350x150/38af92');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 3;
+}
