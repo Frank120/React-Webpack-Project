@@ -5,6 +5,7 @@ import Images from './iamges.json';
 import Btn from './btn/btn';
 import List from './list/list';
 import '../../modules/helper-plugins/byte.js';
+import {Smith} from '../../modules/helper-plugins/Smith.js';
 
 ImageData = (function getImageUrls(imagesDataArr){
     for(var i = 0, j = imagesDataArr.length; i < j; i++){
@@ -15,6 +16,11 @@ ImageData = (function getImageUrls(imagesDataArr){
 
     return imagesDataArr;
 }(Images));
+
+console.log(Smith.createElement('div', {
+    data : [1,2,3]
+}));
+
 
 const test = React.createClass({
     getInitialState(){
@@ -39,7 +45,6 @@ const test = React.createClass({
 
     looper(){
         const target = this.refs.test;
-
     }
 });
 

@@ -14,8 +14,8 @@ const List = React.createClass({
 
     render () {
         const datas = [1, 2, 3];
-        const listItems = datas.map((number) => 
-            <li className={Style['item']} key={number} onClick={this.__switch} ref='item'> 
+        const listItems = datas.map((number) =>
+            <li className={Style['item']} key={number} onClick={this.__switch} ref='item'>
                 <a className={Style['pic' + number]}></a>
             </li>
         );
