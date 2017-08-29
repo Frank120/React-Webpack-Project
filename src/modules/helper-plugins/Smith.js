@@ -6,6 +6,16 @@
     function DEF_PROP(target, name, value, enumerable){
         return Object.defineProperty(target, name, NEW_PROP(value, enumerable));
     }
+    function EXHIBIT_ENGINE_LOOPS(target, fn, context){
+        if (IS_ARRAY(target)){
+            return target.map(fn, context);
+        }
+        var result = [];
+        for (var name in target){
+            result.push(fn.call(context, target[name], name, target));
+        }
+        return result;
+    }
     function IS_ARRAY(target){
         return Array.isArray(target);
     }
@@ -30,6 +40,9 @@
         }
         return result;
     }
+    function HAS_PROP(target, name){
+        return target.hasOwnProperty(name);
+    }
     function NEW_PROP(target, enumerable){
         return {
             configurable : true,
@@ -43,6 +56,7 @@
 
     var TXT_EXHIBIT_COMPONENT = 'SMITH:COMPONENT';
     var TXT_EXHIBIT_DIRECTIVE = 'SMITH:DRIECTIVE';
+    var TXT_EXHIBIT_TRANSFORM = 'SMITH:TRANSFORM';
 
     Smith.createClass     = function (proto){
         return (function (constructor){
