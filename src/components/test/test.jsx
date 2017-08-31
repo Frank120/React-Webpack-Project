@@ -4,6 +4,7 @@ import Style from './test.scss';
 import Images from './iamges.json';
 import Btn from './btn/btn';
 import List from './list/list';
+import FormdEEMO from './form/form'
 import '../../modules/helper-plugins/byte.js';
 import {Smith} from '../../modules/helper-plugins/Smith.js';
 
@@ -37,8 +38,8 @@ const test = React.createClass({
         return (
             <div className = {Style['test']} ref="test" data-test="testBar">
                 <Btn></Btn>
-                <List data = {ImageData}
-                ></List>
+                <List data = {ImageData}></List>
+                <FormdEEMO></FormdEEMO>
             </div>
         )
     },

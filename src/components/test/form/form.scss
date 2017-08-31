@@ -1,0 +1,23 @@
+
+.li-content{
+  list-style: none;
+  padding: 0;
+
+  .__label{
+    display: inline-block;
+    vertical-align: middle;
+    width: 6rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    word-break: normal;
+    white-space: nowrap;
+    //overflow: hidden;
+  }
+
+  .__input{
+    border: 1px solid transparent;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+    line-height: 2rem;
+  }
+}

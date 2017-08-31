@@ -11,6 +11,7 @@ module.exports = function (env, compileEntries) {
 
       // match the output path
       contentBase: `${__dirname}/dist`,
+      host: '10.148.60.82',//company host
 
       // match the output 'publicPath'
       publicPath: '/',
