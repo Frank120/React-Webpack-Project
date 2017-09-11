@@ -69,6 +69,10 @@ const From = React.createClass({
         )
     },
     componentDidMount(){
+        const val = $('#user').val();
+        $('#user').focus(()=>
+         ( alert(val))
+    );
         $('form').validate({
             rules : {
                 email : {
